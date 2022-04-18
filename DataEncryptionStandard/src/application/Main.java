@@ -22,19 +22,19 @@ public class Main {
       String modeOperator = "ECB";
       String key = "12345678";
 
-//      DESAlgorithm encrypt = DESEncrypt.getInstance(
-//          plaintext,
-//          encrypted,
-//          key,
-//          modeOperator
-//        );
-//      try {
-//          encrypt.encrypt();
-//          System.out.println("Encryption completed ");
-//      }catch(Exception e ) {
-//        System.out.println("Error in main method:  "  + e.getMessage());
-//
-//      }
+     DESAlgorithm encrypt = DESEncrypt.getInstance(
+         plaintext,
+         encrypted,
+         key,
+         modeOperator
+       );
+     try {
+         encrypt.encrypt();
+         System.out.println("Encryption completed ");
+     }catch(Exception e ) {
+       System.out.println("Error in main method:  "  + e.getMessage());
+
+     }
       		
       
       DESAlgorithm decrypt = DESDecrypt.getInstance(
