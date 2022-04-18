@@ -2,6 +2,10 @@
 
 
 # Overview 
-The Data Encryption Standard (DES) is a block cipher (a form of shared secret encryption) that was selected by the National Bureau of Standards as an official Federal Information Processing Standard (FIPS) for the United States in 1976 and which has subsequently enjoyed widespread use internationally. It is based on a symmetric-key algorithm that uses a 56-bit key.
+Data Encryption Standard (DES) is a block cipher algorithm that takes plain text in blocks of 64 bits and converts them to ciphertext using keys of 48 bits. It is a symmetric key algorithm, which means that the same key is used for encrypting and decrypting data.
 
 The code has been written to provide readability and easy understanding of the algorithm. Padding scheme used in this implementation is [PKCS5]
+
+
+  # Author
+- [Aridon Krasniqi] [https://github.com/aridonkrasniqii]
