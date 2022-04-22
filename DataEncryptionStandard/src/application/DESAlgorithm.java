@@ -8,12 +8,13 @@ import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
-public abstract class DESAlgorithm {
+public class DESAlgorithm {
   /*
   A FileInputStream obtains input bytes from a file in a file system. What files are available depends on the host environment.
   FileInputStream is meant for reading streams of raw bytes such as image data. For reading streams of characters, consider using FileReader.
  */
-
+  byte[] vectorBytes = new byte[8];
+  IvParameterSpec initializeVector = new IvParameterSpec(vectorBytes);
   FileInputStream fileInput;
   FileOutputStream fileOutput;
   DESKeySpec desKeySpec ;
@@ -22,6 +23,7 @@ public abstract class DESAlgorithm {
 
   // Padding
   Cipher cipher;
+
   public DESAlgorithm(
       File fileInput ,
       File fileOutput,
@@ -35,6 +37,19 @@ public abstract class DESAlgorithm {
 	  this.secretKeyFactor = SecretKeyFactory.getInstance("DES");
 		this.secretKey = secretKeyFactor.generateSecret(desKeySpec);
     this.cipher = Cipher.getInstance("/DES/" + modeOperator +"/PKCS5Padding");
+
+  }
+
+  public DESAlgorithm(String key , String modeOperator)
+  throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, FileNotFoundException, InvalidKeySpecException
+  {
+      this.desKeySpec = new DESKeySpec(key.getBytes());
+	    this.secretKeyFactor = SecretKeyFactory.getInstance("DES");
+		  this.secretKey = secretKeyFactor.generateSecret(desKeySpec);
+      this.cipher = Cipher.getInstance("/DES/" + modeOperator +"/PKCS5Padding");
+  }
+
+  public DESAlgorithm() {
 
   }
 
@@ -56,8 +71,8 @@ public abstract class DESAlgorithm {
 //  public SecretKeyFactory getSecretKey() {
 //    return this.secretKey;
 // 	 }
-  public void test( ) throws InvalidKeySpecException, InvalidKeyException, NoSuchAlgorithmException {
 
+  public void test( ) throws InvalidKeySpecException, InvalidKeyException, NoSuchAlgorithmException {
 
 
   }
@@ -75,18 +90,35 @@ public abstract class DESAlgorithm {
 
     }
 
-
     output.close();
     input.close();
 
   }
 
-  public abstract void encrypt() throws InvalidKeyException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, IOException;
-  public abstract void decrypt() throws InvalidKeyException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IOException;
 
 
   public Key getSecretKey() {
     return this.secretKey;
   }
 
+  public String[] encryptText(String text)
+  	throws InvalidKeyException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, IOException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
+  {
+        KeyGenerator key  = KeyGenerator.getInstance("DES");
+        SecretKey myDesKey = key.generateKey();
+        System.out.println("Key : " + myDesKey + " \n");
+        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+
+        cipher.init(Cipher.ENCRYPT_MODE, myDesKey);
+        byte[] encryptedText = cipher.doFinal(text.getBytes());
+        String encrypted = new String(encryptedText);
+
+
+        cipher.init(Cipher.DECRYPT_MODE, myDesKey);
+        byte[] decryptedText = cipher.doFinal(encryptedText);
+        String decrypted = new String(decryptedText);
+
+        return new String[]{ encrypted, decrypted};
+
+  }
 }
