@@ -83,9 +83,7 @@ public class Main {
       System.out.println(menu);
 		}
 
-		// TODO: me provu me ndryshu celsin
-		// TODO: me kqyre a eshte vektori inicializus i njejt per decrypt edhe encrypt
-		// TODO: pse nuk eshte ^
+		
     scanner.close();
 	}
 
