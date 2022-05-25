@@ -9,4 +9,3 @@ The code has been written to provide readability and easy understanding of the a
 
   # Author
 - [Aridon Krasniqi](https://github.com/aridonkrasniqii)
-@aridonkrasniqii
